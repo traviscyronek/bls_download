@@ -15,13 +15,7 @@ Purpose: This script downloads selected series from the BLS using the BLS API
          handled in config.py.
 """
 
-# TODO: Currently the downloader breaks during the conversion to the pandas
-#       dataframe format if the time series start (or end) at different
-#       points in time. It would be nice to fix this at some point and just
-#       leave empty cells if no data are there.
-
-
-pwd = '/Users/traviscyronek/Documents/data/bls/scripts/'
+pwd = '~/bls/'
 
 
 # ------------------- #
