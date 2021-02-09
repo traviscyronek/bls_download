@@ -2,6 +2,7 @@
 File:    bls_config.py
 Author:  Travis Cyronek
 Date:    8 February 2021
+Purpose: Configuration file which specifies bls series batches to be downloaded by bls_download.py.
 """
 
 
@@ -15,7 +16,7 @@ batch_laus = {
     'download': True,
     'start_year': 2010,
     'end_year': 2020,
-    'save_dir': '/Users/traviscyronek/Dropbox/data/bls/laus/files_raw/',
+    'save_dir': '~/bls/laus/',
     'save_name': 'laus',
     'series': {
         # 'California Metropolitan areas Santa Maria-Santa Barbara, CA Metropolitan Statistical Area Not Seasonally Adjusted'
@@ -53,7 +54,7 @@ batch_qcew = {
     'start_year': 2010,
     'end_year': 2020,
     'save_name': 'qcew_sb',
-    'save_dir': '/Users/traviscyronek/Dropbox/data/bls/qcew/files_raw/',
+    'save_dir': '~/bls/qcew/',
     'series': {
         # 'Santa Barbara County, California Average Annual Pay All establishment sizes Private'
         'ENU0608350510': 'sb_avewage_all',        # 'Total, all industries'
@@ -90,7 +91,7 @@ batch_ces = {
     'start_year': 2010,
     'end_year': 2020,
     'save_name': 'ces_tc',
-    'save_dir': '/Users/traviscyronek/Dropbox/data/bls/ces/files_raw/',
+    'save_dir': '~/bls/ces/',
     'series': {
         # 'Not Seasonally Adjusted California Santa Maria-Santa Barbara, CA'
         'SMU06422000000000001': 'sb_indemp_0000000001', # 'Total Nonfarm All Employees, In Thousands'
