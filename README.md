@@ -8,4 +8,6 @@ You'll need to input your institution, email address, and indicate that you've r
 
 Each batch is defined by a dictionary object stored in bls_config.py. It must have "batch" in the name (e.g. "batch_laus"). It must also include entries specifying whether or not to download the batch, start and end dates, and save name and location. Most importantly, it should also include a nested dictionary of series which lists BLS series IDs as keys and desired variable names as values. For an example see the included configuration file. After running the script, any batches designated to be downloaded will be saved to the specified directory as "DATE_SAVENAME.csv".
 
-You must know the series IDs in order to construct these batches. These IDs can be found across https://bls.gov. For more information on the structured naming convention, see https://www.bls.gov/help/hlpforma.htm.
+You must know the series IDs in order to construct these batches. These IDs can be found across https://bls.gov. For more information on the structured naming convention, see 
+
+https://www.bls.gov/help/hlpforma.htm.
