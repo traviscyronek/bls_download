@@ -10,4 +10,4 @@ Each batch is defined by a dictionary object stored in bls_config.py. It must ha
 
 You must know the series IDs in order to construct these batches. These IDs can be found across https://bls.gov. For more information on the structured naming convention, see 
 
-https://www.bls.gov/help/hlpforma.htm.
+https://www.bls.gov/help/hlpforma.htm
