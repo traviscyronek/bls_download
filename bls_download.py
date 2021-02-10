@@ -19,7 +19,7 @@ Purpose: Main file to download BLS series data. The only changes that should be
 # ------------------------- #
 
 # user settings
-config_loc = '~/bls/scripts/'
+config_loc = '~/bls_download/'
 bls_key = 'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
 
 # imports
