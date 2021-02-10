@@ -16,8 +16,8 @@ batch_laus = {
     'download': True,
     'start_year': 2010,
     'end_year': 2020,
-    'save_dir': '~/bls/laus/',
-    'save_name': 'laus',
+    'save_dir': '~/bls_download/laus/',
+    'save_name': 'laus_tc',
     'series': {
         # 'California Metropolitan areas Santa Maria-Santa Barbara, CA Metropolitan Statistical Area Not Seasonally Adjusted'
         'LAUMT064220000000003': 'sb_lf',
@@ -54,7 +54,7 @@ batch_qcew = {
     'start_year': 2010,
     'end_year': 2020,
     'save_name': 'qcew_sb',
-    'save_dir': '~/bls/qcew/',
+    'save_dir': '~/bls_download/qcew/',
     'series': {
         # 'Santa Barbara County, California Average Annual Pay All establishment sizes Private'
         'ENU0608350510': 'sb_avewage_all',        # 'Total, all industries'
@@ -91,7 +91,7 @@ batch_ces = {
     'start_year': 2010,
     'end_year': 2020,
     'save_name': 'ces_tc',
-    'save_dir': '~/bls/ces/',
+    'save_dir': '~/bls_download/ces/',
     'series': {
         # 'Not Seasonally Adjusted California Santa Maria-Santa Barbara, CA'
         'SMU06422000000000001': 'sb_indemp_0000000001', # 'Total Nonfarm All Employees, In Thousands'
