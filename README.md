@@ -5,4 +5,4 @@ A python script for downloading public BLS data from its LABSTAT database. This 
 1. Change terminal directory to location of bls_download.py.
 2. Update directory dictionary (in bls_download.py, the only thing in this file that should be edited by the user) with appropriate file locations.
 3. Edit configuration file (a .json file where the important settings go, see example).
-4. Execute the following in the terminal: "python bls_download.py --config=bls_config_example.json" or "python bls_download.py -c bls_config_example.json"
+4. Execute the following in the terminal: "python bls_download.py --config=bls_config_example.json" or "python bls_download.py -c bls_config_example.json".
