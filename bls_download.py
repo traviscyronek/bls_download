@@ -4,13 +4,14 @@ Author:  Travis Cyronek
 Date:    2022-12-20
 
 Purpose: Download bls series from the public API v2. You will need a
-         registration key, which can be obtained at https://data.bls.gov/registrationEngine/.
-         There are some constraints with the API to be aware of: (1) daily
-         query limit = 500, (2) request rate limit = 50 per 10 sec, (3) years
-         to download limit = 20, (4) number of series to download = 50. All of
-         these are handled by the program except for the daily query limit. If
-         this is reached an error will be printed to the console to let you
-         know that the download has failed.
+         registration key, which can be obtained at
+         https://data.bls.gov/registrationEngine/.  There are some constraints
+         with the API to be aware of: (1) daily query limit = 500, (2) request
+         rate limit = 50 per 10 sec, (3) years to download limit = 20, (4)
+         number of series to download = 50. All of these are handled by the
+         program except for the daily query limit. If this is reached an error
+         will be printed to the console to let you know that the download has
+         failed.
 
 Usage:   (Step 1) Change terminal directory to location of bls_download.py.
          (Step 2) Update directory dictionary below with appropriate locations.
@@ -48,6 +49,9 @@ def processed_check(data):
     if data['status'] == 'REQUEST_NOT_PROCESSED':
         result = False
         message = data['message'][0]
+    elif data['status'] == 'REQUEST_FAILED_INVALID_PARAMETERS':
+        result = False
+        message = 'In last request, ' + data['message'][0]
     else:
         result = True
         message = '0'
@@ -104,18 +108,20 @@ def main():
         if o in ('-c', '--config'):
             with open(directories['config_files']+a) as f:
                 config_f = json.load(f)
-            print('attempting to download data for "{}" request'.format(config_f['save_name']))
+            print('Attempting to download data for "{}" request...'.format(config_f['save_name']))
     series     = list(config_f['series'].keys())
     year_start = config_f['year_start']
     year_end   = config_f['year_end']
     N_series   = len(series)
     N_years    = year_end - year_start
 
-    # we'll need to chunk data if the request is large
-    if N_series > 50 or N_years > 20:
+    # we'll need to chunk the data if the request is large
+    limit_s  = 50 # hard-coded series limit
+    limit_y  = 20 # hard-coded years limit
+    if N_series > limit_s or N_years > limit_y:
         print('Large request, API v2.0 limit reached (> 50 series and/or > 20 years). Chunking...')
-        N_chunks_s = int(np.floor(N_series/50)) + 1
-        N_chunks_y = int(np.floor(N_years/20)) + 1
+        N_chunks_s = int(np.floor(N_series/limit_s)) + 1
+        N_chunks_y = int(np.floor(N_years/(limit_y+1)))
         N_chunks   = N_chunks_s*N_chunks_y
 
     # retrieve the data from bls
@@ -129,13 +135,13 @@ def main():
             for j in range(N_chunks_y):
                 print('Downloading chunk {}/{}...'.format(chunk_counter, N_chunks))
                 if i < N_chunks_s - 1:
-                    series_chunk = series[50*i+1:50*(i+1)+1]
+                    series_chunk = series[limit_s*i+1:limit_s*(i+1)+1]
                 else:
-                    series_chunk = series[50*i+1:N_series]
+                    series_chunk = series[limit_s*i+1:N_series+1]
                 if j < N_chunks_y - 1:
-                    year_chunk = (20*j+j, 20*(j+1)+j)
+                    year_chunk = ((limit_y+1)*j+j, (limit_y+1)*(j+1)+j)
                 else:
-                    year_chunk = (20*j+j, N_years)
+                    year_chunk = ((limit_y+1)*j+j, N_years+1)
                 request = json.dumps({'seriesid': series_chunk,
                                       'startyear': year_start + year_chunk[0],
                                       'endyear': year_start + year_chunk[1],
@@ -163,6 +169,10 @@ def main():
                               'registrationkey': config_f['registration_key']})
         retrieve = requests.post(url, headers=headers, data=request)
         data     = json.loads(retrieve.text)
+        result, message = processed_check(data)
+        if result == False:
+            print(message)
+            exit() # kill process if daily limit has been reached
         df       = convert_to_df(data, config_f)
     df.to_csv('{}{}_{}.csv'.format(config_f['save_loc'],
                                    the_date,
