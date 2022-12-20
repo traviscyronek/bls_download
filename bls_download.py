@@ -121,7 +121,7 @@ def main():
     if N_series > limit_s or N_years > limit_y:
         print('Large request, API v2.0 limit reached (> 50 series and/or > 20 years). Chunking...')
         N_chunks_s = int(np.floor(N_series/limit_s)) + 1
-        N_chunks_y = int(np.floor(N_years/(limit_y+1)))
+        N_chunks_y = int(np.floor(N_years/(limit_y+1))) + 1
         N_chunks   = N_chunks_s*N_chunks_y
 
     # retrieve the data from bls
@@ -133,7 +133,6 @@ def main():
         chunk_counter = 1
         for i in range(N_chunks_s):
             for j in range(N_chunks_y):
-                print('Downloading chunk {}/{}...'.format(chunk_counter, N_chunks))
                 if i < N_chunks_s - 1:
                     series_chunk = series[limit_s*i+1:limit_s*(i+1)+1]
                 else:
@@ -141,7 +140,8 @@ def main():
                 if j < N_chunks_y - 1:
                     year_chunk = ((limit_y+1)*j+j, (limit_y+1)*(j+1)+j)
                 else:
-                    year_chunk = ((limit_y+1)*j+j, N_years+1)
+                    year_chunk = ((limit_y+1)*j+j, N_years)
+                print('Downloading chunk {}/{}...'.format(chunk_counter, N_chunks))
                 request = json.dumps({'seriesid': series_chunk,
                                       'startyear': year_start + year_chunk[0],
                                       'endyear': year_start + year_chunk[1],
