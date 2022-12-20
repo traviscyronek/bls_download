@@ -1,0 +1,22 @@
+{
+    "registration_key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "year_start": 1979,
+    "year_end": 2022,
+    "save_loc": "/path/to/desired/save/location/",
+    "save_name": "cpi",
+    "series": {
+        "CUUR0100SA0": "northeast",
+        "CUUR0110SA0": "new_england",
+        "CUUR0120SA0": "middle_atlantic",
+        "CUUR0200SA0": "midwest",
+        "CUUR0230SA0": "east_north_central",
+        "CUUR0240SA0": "west_north_central",
+        "CUUR0300SA0": "south",
+        "CUUR0350SA0": "south_atlantic",
+        "CUUR0360SA0": "east_south_central",
+        "CUUR0370SA0": "west_south_central",
+        "CUUR0400SA0": "west",
+        "CUUR0480SA0": "mountain",
+        "CUUR0490SA0": "pacific"
+    }
+}
