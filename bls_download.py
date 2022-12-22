@@ -1,7 +1,7 @@
 """
 File:    bls_download.py
 Author:  Travis Cyronek
-Date:    2022-12-20
+Date:    2022-12-21
 
 Purpose: Download bls series from the public API v2. You will need a
          registration key, which can be obtained at
@@ -46,15 +46,12 @@ import time
 
 
 def processed_check(data):
-    if data['status'] == 'REQUEST_NOT_PROCESSED':
-        result = False
-        message = data['message'][0]
-    elif data['status'] == 'REQUEST_FAILED_INVALID_PARAMETERS':
-        result = False
-        message = 'In last request, ' + data['message'][0]
-    else:
+    if data['status'] == 'REQUEST_SUCCEEDED':
         result = True
         message = '0'
+    else:
+        result = False
+        message = data['message'][0]
     return (result, message)
 
 
@@ -121,7 +118,7 @@ def main():
     if N_series > limit_s or N_years > limit_y:
         print('Large request, API v2.0 limit reached (> 50 series and/or > 20 years). Chunking...')
         N_chunks_s = int(np.floor(N_series/limit_s)) + 1
-        N_chunks_y = int(np.floor(N_years/(limit_y+1))) + 1
+        N_chunks_y = int(np.floor(N_years/limit_y)) + 1
         N_chunks   = N_chunks_s*N_chunks_y
 
     # retrieve the data from bls
@@ -134,13 +131,14 @@ def main():
         for i in range(N_chunks_s):
             for j in range(N_chunks_y):
                 if i < N_chunks_s - 1:
-                    series_chunk = series[limit_s*i+1:limit_s*(i+1)+1]
+                    series_chunk = series[limit_s*i:limit_s*(i+1)]
                 else:
-                    series_chunk = series[limit_s*i+1:N_series+1]
+                    series_chunk = series[limit_s*i:N_series+1]
                 if j < N_chunks_y - 1:
-                    year_chunk = ((limit_y+1)*j+j, (limit_y+1)*(j+1)+j)
+                    year_chunk = ((limit_y-1)*j+j, (limit_y-1)*(j+1)+j)
                 else:
-                    year_chunk = ((limit_y+1)*j+j, N_years)
+                    year_chunk = ((limit_y-1)*j+j, N_years+1)
+                #print(year_start+year_chunk[0], year_start+year_chunk[1])
                 print('Downloading chunk {}/{}...'.format(chunk_counter, N_chunks))
                 request = json.dumps({'seriesid': series_chunk,
                                       'startyear': year_start + year_chunk[0],
@@ -152,8 +150,7 @@ def main():
                 sys.stdout.flush() # this keeps the console from freezing after time.sleep()
                 result, message = processed_check(data)
                 if result == False:
-                    print(message)
-                    exit() # kill process if daily limit has been reached
+                    print('Message from BLS server: "{}".'.format(message))
                 df = convert_to_df(data, config_f)
                 df.to_csv('{}{}_{}_chunk{}.csv'.format(directories['downloads'],
                                                        the_date,
@@ -171,9 +168,8 @@ def main():
         data     = json.loads(retrieve.text)
         result, message = processed_check(data)
         if result == False:
-            print(message)
-            exit() # kill process if daily limit has been reached
-        df       = convert_to_df(data, config_f)
+            print('Message from BLS server: "{}".'.format(message))
+        df = convert_to_df(data, config_f)
     df.to_csv('{}{}_{}.csv'.format(config_f['save_loc'],
                                    the_date,
                                    config_f['save_name']), index=False)
