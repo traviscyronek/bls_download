@@ -1,5 +1,5 @@
 # bls_download
-This is a repo for code that can be used to download BLS data. Use whichever is appropriate, if any.
+This is a repo for code that can be used to download various BLS data. Use whichever is appropriate, if any.
 
 ## labstat_download.py
 A python script for downloading public BLS data from its LABSTAT database. This is a wrapper for the BLS Public Data API v2.0 which handles some of the annoying constraints of the protocol. It hanldes the *request rate limit* of 50 requests per 10 sec, the *number of years limit* of 20 years, and the *number of series limit* of 50 series. There is additionally a 500 *daily query limit* to be aware of; the code will recognize that this limit is reached and print an error to the console. This code requires a registration key, which can be obtained at https://data.bls.gov/registrationEngine/.
