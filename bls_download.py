@@ -1,7 +1,7 @@
 """
-File:    bls_download.py
+File:    labstat_download.py
 Author:  Travis Cyronek
-Date:    2022-12-21
+Date:    2022-12-22
 
 Purpose: Download bls series from the public API v2. You will need a
          registration key, which can be obtained at
@@ -13,12 +13,12 @@ Purpose: Download bls series from the public API v2. You will need a
          will be printed to the console to let you know that the download has
          failed.
 
-Usage:   (Step 1) Change terminal directory to location of bls_download.py.
+Usage:   (Step 1) Change terminal directory to location of labstat_download.py.
          (Step 2) Update directory dictionary below with appropriate locations.
          (Step 3) Edit configuration file, see example.
          (Step 4) Execute the following in terminal,
-             "python bls_download.py --config=bls_config_example.json" or
-             "python bls_download.py -c bls_config_example.json".
+             "python labstat_download.py --config=labstat_config_example.json" or
+             "python labstat_download.py -c labstat_config_example.json".
 """
 
 
@@ -137,7 +137,6 @@ def main():
                     year_chunk = ((limit_y-1)*j+j, (limit_y-1)*(j+1)+j)
                 else:
                     year_chunk = ((limit_y-1)*j+j, N_years+1)
-                #print(year_start+year_chunk[0], year_start+year_chunk[1])
                 print('Downloading chunk {}/{}...'.format(chunk_counter, N_chunks))
                 request = json.dumps({'seriesid': series_chunk,
                                       'startyear': year_start + year_chunk[0],
@@ -149,7 +148,7 @@ def main():
                 sys.stdout.flush() # this keeps the console from freezing after time.sleep()
                 result, message = processed_check(data)
                 if result == False:
-                    print('Message from BLS server: "{}".'.format(message))
+                    print('Message from BLS LABSTAT server: "{}".'.format(message))
                 df = convert_to_df(data, config_f)
                 df.to_csv('{}{}_{}_chunk{}.csv'.format(directories['downloads'],
                                                        the_date,
