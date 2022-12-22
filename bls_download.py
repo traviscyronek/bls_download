@@ -22,9 +22,8 @@ Usage:   (Step 1) Change terminal directory to location of bls_download.py.
 """
 
 
-directories = {'config_files': 'C:/Users/Travis/Dropbox/data/programs/', # location of your bls_config json files
-               'downloads': 'C:/Users/Travis/Downloads/'} # some local download directory so dropbox /
-                                                          #     google drive doesn't screw with temp file cleanup
+directories = {'config_files': '/path/to/where/config/files/are/', # location of your bls_config.json files
+               'downloads': '/path/to/downloads/or/something/local/'} # workaround to deal with dropbox / gdrive sync issues
 
 
 # ---------------------------------------- #
