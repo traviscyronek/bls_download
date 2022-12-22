@@ -36,7 +36,6 @@ def downloader(layout, save_loc):
 
     url = 'https://www.bls.gov/cew/downloadable-data-files.htm'
     soup = BeautifulSoup(requests.get(url).content)
-    links = soup.find_all('a', attrs={'href': re.compile('https://data.bls.gov/cew/data/files/')})
     links = soup.find_all('a', href=re.compile(layout))
 
     for link in links:
