@@ -7,10 +7,10 @@ A python script for downloading public BLS data from its LABSTAT database. This 
 The particulars of what is downloaded, for what years, and where the output is saved is handled by .json configuration files. An example is given. Importantly this code works for public BLS series with a "Series ID." For more see https://www.bls.gov/help/hlpforma.htm.
 
 ### Usage
-1. Change terminal directory to location of bls_download.py.
-2. Update directory dictionary (in bls_download.py, the only thing in this file that should be edited by the user) with appropriate file locations.
+1. Change terminal directory to location of labstat_download.py.
+2. Update directory dictionary (in labstat_download.py, the only thing in this file that should be edited by the user) with appropriate file locations.
 3. Edit configuration file (a .json file where the important settings go, see example).
-4. Execute the following in the terminal: "python bls_download.py --config=bls_config_example.json" or "python bls_download.py -c bls_config_example.json".
+4. Execute the following in the terminal: "python labstat_download.py --config=labstat_config_example.json" or "python labstat_download.py -c labstat_config_example.json".
 
 ## cps_download.py
 Downloads and renames monthly CPS basic monthly files from the NBER. Note that the first version is deprecated and no longer works. Please use cps_download_v2.py.
